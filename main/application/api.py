@@ -1,10 +1,6 @@
-from . import api
-from flask_restplus import Resource
+from flask_restplus import Api
+from . import app
 
-@api.route("/authorize")
-class Auth(Resource):
-    def post(self, *body):
-        return body
+api = Api(app)
 
-    def get(self, *args):
-        return "GETTER"
+from .resources import *
