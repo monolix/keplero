@@ -3,7 +3,6 @@ from . import app
 
 api = Api(
     app,
-    ui=False,
     version="0.01",
     description="The official JSON REST API for the Keplero Coin System."
 )
