@@ -1,1 +1,1 @@
-DATABASE_PATH = "/home/emanuele/projects/keplero/main/database/users.db"
+DATABASE_PATH = "/home/emanuele/projects/keplero/src/database/users.db"
