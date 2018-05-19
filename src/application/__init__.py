@@ -1,8 +1,14 @@
+from flask_restplus import Api
 from flask import Flask
+
+from .authorizing import api as auth
 
 app = Flask(__name__)
 
-app.config["DATABASE_PATH"] = "/home/emanuele/projects/keplero/src/database/users.db"
+api = Api(
+    app,
+    title="Keplero",
+    description="REST API of the Keplero Coin System"
+)
 
-from .db_controller import *
-from .api import *
+api.add_namespace(auth)
