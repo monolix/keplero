@@ -16,8 +16,16 @@ def getHashedPassword(id):
     return cursor.fetchone()[1]
 
 def getBalance(id):
-    cursor.execute("SELECT * FROM balances WHERE id = ?", (id,))
-    return cursor.fetchone()[1]
+    cursor.execute("SELECT * FROM balances WHERE 'id' = ?", (id,))
+    result = cursor.fetchall()
+    print("Balance:", result) # DEBUG: SHOW ALL ROWS
+    return result[0][1]
+
+def addBalance(id, quantity):
+    balance = getBalance(id)
+    new_balance = int(balance) + quantity
+    cursor.execute("UPDATE balances SET quantity = ? WHERE id = ?", (new_balance, id))
+    connecton.commit()
 
 def createUser(id, password):
     hashed_password = hashTok(password)
@@ -31,5 +39,22 @@ def createToken(size=32, chars=string.ascii_uppercase + string.digits):
 def createSession(id):
     token = createToken()
     now = datetime.now().strftime("%y-%m-%d %H:%M:%S")
-    cursor.execute("INSERT INTO sessions ('token', 'date', 'id') VALUES (?, ?, ?)", (id, now, token))
+    cursor.execute("INSERT INTO sessions ('token', 'date', 'id') VALUES (?, ?, ?)", (token, now, id))
+    connection.commit()
     return id, now, token
+
+def getSessionID(token):
+    cursor.execute("SELECT 'id' FROM sessions WHERE token = ?", (token,))
+    match = cursor.fetchone()
+    return match[0]
+
+def sendMoney(from_id, to_id, quantity):
+    from_balance = getBalance(from_id)
+    to_balance = getBalance(to_id)
+    if int(quantity) > from_balance:
+        return 2
+    if int(qunatity) <= 0:
+        return 3
+    addBalance(from_id, -quantity)
+    addBalance(to_id, quantity)
+    return 1

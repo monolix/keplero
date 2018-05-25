@@ -1,7 +1,7 @@
 from flask_restplus import Namespace, Resource, fields
 from .utils.database import getHashedPassword, createSession, hashTok
 
-api = Namespace("authorizing", description="Login related operations.")
+api = Namespace("authorize", description="Login related operations.")
 
 credentials = api.model("Account Credentials", {
     "id": fields.String("123456789", required=True, description="The Account's ID."),
