@@ -13,27 +13,33 @@ sendBundle = api.model("Transaction Infos", {
 class SendMoney(Resource):
     @api.expect(sendBundle)
     def post(self):
-        session = api.payload["token"]
-        from_id = getSessionID(session)
-        to_id = api.payload["to"]
-        quantity = api.payload["quantity"]
-        result = sendMoney(from_id, to_id, quantity)
-        if result == 1:
-            return {
-                "ok": True,
-                "response": {
-                    "from": from_id,
-                    "to": to_id,
-                    "quantity": int(quantity)
+        if set(['token', 'to', 'quantity']) == set(api.payload.keys()):
+            session = api.payload["token"]
+            from_id = getSessionID(session)
+            to_id = api.payload["to"]
+            quantity = api.payload["quantity"]
+            result = sendMoney(from_id, to_id, quantity)
+            if result == 1:
+                return {
+                    "ok": True,
+                    "response": {
+                        "from": from_id,
+                        "to": to_id,
+                        "quantity": int(quantity)
+                    }
                 }
-            }
-        elif result == 2:
+            elif result == 2:
+                return {
+                    "ok": False,
+                    "error": "<balance:not_enough_money>"
+                }
+            elif result == 3:
+                return {
+                    "ok": False,
+                    "error": "<syntax:invalid_json>"
+                }
+        else:
             return {
-                "ok": False,
-                "error": "<balance:not_enough_money>"
-            }
-        elif result == 3:
-            return {
-                "ok": False,
-                "error": "<syntax:invalid_json>"
+                'ok': False,
+                'error': '<syntax:invalid_json>'
             }
