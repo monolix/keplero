@@ -8,6 +8,7 @@ credentials = api.model("Account Credentials", {
     "password": fields.String("log_me9452!#", required=True, description="The Account's password.")
 })
 
+
 @api.route("/getToken")
 class GetToken(Resource):
     @api.expect(credentials)
@@ -28,10 +29,10 @@ class GetToken(Resource):
             else:
                 return {
                     'ok': False,
-                    'error': '<auth:invalid_credentials>'
+                    'error': '<auth:invalid-credentials>'
                 }
         else:
             return {
                 'ok': False,
-                'error': '<syntax:invalid_json>'
+                'error': '<syntax:invalid-json>'
             }
