@@ -11,8 +11,13 @@ connection = sql.connect(DATABASE_PATH, check_same_thread=False)
 cursor = connection.cursor()
 
 
-def hashTok(tok):
-    return sha512(tok.encode()).hexdigest()
+def hashTok(tok, **kwargs):
+    dig = sha512(tok.encode()).hexdigest()
+    return dig
+
+
+def getTime():
+    return datetime.now().strftime("%y-%m-%d %H:%M:%S")
 
 
 def getHashedPassword(id):
@@ -81,10 +86,20 @@ def sendMoney(from_id, to_id, quantity):
 
 
 def addTransaction(from_id, to_id, q):
-    now = datetime.now().strftime("%y-%m-%d %H:%M:%S")
+    now = getTime()
     unsigned = from_id + to_id + str(q) + now
     sign = hashTok(unsigned)
     query = "INSERT INTO transactions ('from', 'to', 'date', 'quantity', 'sign') VALUES (?, ?, ?, ?, ?)"
     cursor.execute(query, (from_id, to_id, now, q, sign))
     connection.commit()
     return sign, now, from_id, to_id, int(q)
+
+
+def createRecv(from_id, time_exposed=600, max=1024, allow=[]):
+    now = getTime()
+    token = hashTok(from_id + str(time_exposed) + str(max) + now)
+    cursor.execute(
+        "INSERT INTO receive-token ('from', 'max-amount', 'allow', 'time-created', 'expires', 'token') VALUES (?, ?, ?, ?)",
+        (from_id, int(max), json.dumps(allow), now, int(time_exposed), token)
+    )
+    connection.commit()
