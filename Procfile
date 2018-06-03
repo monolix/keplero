@@ -1,1 +1,1 @@
-web: cd src && sudo gunicorn run:app
+web: cd src && gunicorn run:app
