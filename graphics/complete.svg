@@ -5,11 +5,35 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    version="1.1"
    id="svg3800"
    viewBox="0 0 90 50"
    height="50mm"
-   width="90mm">
+   width="90mm"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="complete.svg">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1301"
+     inkscape:window-height="744"
+     id="namedview11"
+     showgrid="false"
+     inkscape:zoom="1.4142136"
+     inkscape:cx="137.94742"
+     inkscape:cy="88.926903"
+     inkscape:window-x="65"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
   <defs
      id="defs3" />
   <metadata
@@ -20,47 +44,47 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <g
      id="layer1">
+    <text
+       id="text3838"
+       y="32.821339"
+       x="21.984447"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20.43297195px;line-height:125%;font-family:'Product Sans';-inkscape-font-specification:'Product Sans';letter-spacing:0px;word-spacing:0px;fill:#24589e;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       xml:space="preserve"
+       sodipodi:linespacing="125%"><tspan
+         y="32.821339"
+         x="21.984447"
+         id="tspan3840">Keplero</tspan></text>
     <rect
-       ry="2.5656564"
-       y="15.333702"
-       x="7.9022226"
-       height="18.062222"
-       width="18.062222"
+       ry="3.0959046"
+       y="14.48842"
+       x="0.81278473"
+       height="21.79517"
+       width="21.79517"
        id="rect3392"
-       style="opacity:1;fill:#2a7fff;stroke-width:5;stroke-miterlimit:4;stroke-dasharray:none"
-       rx="2.5656567" />
+       style="opacity:1;fill:#24589e;fill-opacity:1;stroke-width:5;stroke-miterlimit:4;stroke-dasharray:none" />
     <rect
-       rx="2.758081"
-       ry="2.6811109"
-       y="27.75148"
-       x="9.3133345"
-       height="4.2333331"
-       width="4.2333336"
+       rx="3.3280981"
+       ry="3.2352202"
+       y="29.472603"
+       x="2.515532"
+       height="5.108243"
+       width="5.1082435"
        id="rect4196"
        style="opacity:1;fill:#f9f9f9;stroke-width:5;stroke-miterlimit:4;stroke-dasharray:none" />
     <rect
-       rx="2.758081"
-       ry="2.6811109"
-       y="16.744814"
-       x="20.320004"
-       height="4.2333331"
-       width="4.2333336"
+       rx="3.3280981"
+       ry="3.2352202"
+       y="16.19117"
+       x="15.796963"
+       height="5.108243"
+       width="5.1082435"
        id="rect4196-3"
        style="opacity:1;fill:#f9f9f9;stroke-width:5;stroke-miterlimit:4;stroke-dasharray:none" />
-    <text
-       id="text3838"
-       y="30.47963"
-       x="26.34074"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16.93333244px;line-height:125%;font-family:'Product Sans';-inkscape-font-specification:'Product Sans';letter-spacing:0px;word-spacing:0px;fill:#24589e;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       xml:space="preserve"><tspan
-         y="30.47963"
-         x="26.34074"
-         id="tspan3840">Keplero</tspan></text>
   </g>
 </svg>
