@@ -9,3 +9,4 @@ MarkupSafe==1.0
 pytz==2018.4
 six==1.11.0
 Werkzeug==0.14.1
+gunicorn==19.8.1
