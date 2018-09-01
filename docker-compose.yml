@@ -1,0 +1,35 @@
+version: "3"
+
+services:
+  api:
+    name: api
+    container_name: api
+    build: ./src/api
+    links:
+      - mongo
+  
+  web:
+    name: web
+    container_name: web
+    build: ./src/web
+    links:
+      - api
+  
+  mongo:
+    name: mongo
+    container_name: mongo
+    image: mongo:latest
+  
+  nginx:
+    name: nginx
+    container_name: nginx
+    image: nginx:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./src/nginx/proxy.conf:/etc/nginx/nginx.conf
+      - /etc/letsencrypt/:/etc/letsencrypt/
+    links:
+      - api
+      - web
