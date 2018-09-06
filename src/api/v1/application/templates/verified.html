@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    {% if verified %}
+        <h1 class="success">Verified.</h1>
+        <p>
+            You can close this tab now.
+        </p>
+    {% else %}
+        <h1 class="warning">Link Expired!</h1>
+        <p>
+            Please re-send the Verification Email.
+        </p>
+    {% endif %}
+    
+    <style>
+        * {
+            font-family: Helvetica;
+        }
+
+        h1.warning {
+            color: red;
+        }
+
+        h1.success {
+            color: #00BB00;
+        }
+    </style>
+</body>
+</html>

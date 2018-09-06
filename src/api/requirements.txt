@@ -1,2 +1,4 @@
 flask
 flask_mongoalchemy
+flask_bcrypt
+flask_mail
