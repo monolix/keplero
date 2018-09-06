@@ -1,6 +1,6 @@
 # Keplero
 
- The entire Keplero Coin System (written in Python with Flask-RestPlus).
+ The entire Keplero Coin System (written in Python with Flask).
 
 ## Collaborators
 
