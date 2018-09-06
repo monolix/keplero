@@ -3,32 +3,10 @@
 <head>
     <meta charset="UTF-8">
 </head>
-<body>
-    <h1>Hi {{ username }}</h1>
-    <p>
-        Please verify tour Account by clicking this button. <br> <br>
-        <a class="button" href="http://localhost:8000/verify/{{ link }}">Click Me</a>
-    </p>
-    
-    <style>
-        * {
-            font-family: Helvetica;
-        }
-        a.button {
-            text-decoration: none;
-            color: #FAFAFA;
-            background: #006fca;
-            padding: 1em 1.2em;
-            border-radius: 0.2em;
-            text-transform: uppercase;
-            display: inline-block;
-            box-shadow: 0px 2px 8px 0px #4b4b4b;
-            transition: 0.4s box-shadow ease-in-out;
-        }
-
-        a.button:hover {
-            box-shadow: 0px 3px 8px 0px #4b4b4b;
-        }
-    </style>
-</body>
+    <body style="font-family: Helvetica; color: black;">
+        <h1>Hi {{ username }}</h1>
+        <h4>Please verify your Account by clicking this button.</h4>
+        <a style="text-decoration: none; color: #FAFAFA; background: #006fca; padding: 1em 1.2em; border-radius: 0.2em; text-transform: uppercase; display: inline-block;" 
+        href="http://localhost:8000/verify/{{ token }}">Click Me</a>
+    </body>
 </html>

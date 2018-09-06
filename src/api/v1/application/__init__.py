@@ -14,8 +14,9 @@ bcrypt = Bcrypt(app)
 s = URLSafeTimedSerializer(app.config["SECRET_KEY"])
 
 
-# Load Models & Views
+# Load Models & Errors
 from .models import *
+from .errors import *
 
 # Load Blueprints
 from .views import views

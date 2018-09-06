@@ -5,5 +5,9 @@ class User(db.Document):
     username = db.StringField()
     email = db.StringField()
     password = db.BinaryField()
-    balance = db.IntegerField()
+    balance = db.IntField()
     status = db.StringField()
+
+class Session(db.Document):
+    id = db.StringField()
+    token = db.StringField()
