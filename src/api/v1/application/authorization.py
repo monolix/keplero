@@ -78,7 +78,7 @@ def loginUser():
     if user.status == "unverified":
         return abort(401)
 
-    session_token = s.dumps(user.id + int(time()), salt="session-token")
+    session_token = s.dumps(user.id + str(time()), salt="session-token")[:32]
 
     session = Session(id=user.id, token=session_token)
 
