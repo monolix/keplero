@@ -11,7 +11,7 @@ app.config.from_pyfile("config.cfg")
 db = MongoAlchemy(app)
 mail = Mail(app)
 bcrypt = Bcrypt(app)
-s = URLSafeTimedSerializer(app.config["SECRET_KEY"])
+serializer = URLSafeTimedSerializer(app.config["SECRET_KEY"])
 
 
 # Load Models & Errors

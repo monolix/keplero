@@ -1,4 +1,4 @@
-from . import bcrypt, mail, s
+from . import bcrypt, mail, serializer
 from .models import User, Session
 from time import time
 from random import randint
@@ -9,6 +9,7 @@ auth = Blueprint("authorization", __name__)
 
 @auth.route("/register", methods=["POST"])
 def registerUser():
+    ip = request.remote_addr
     payload = request.get_json()
     required = ["password", "email", "username"]
 
@@ -19,16 +20,16 @@ def registerUser():
     email = payload["email"]
     username = payload["username"]
 
-    if User.query.filter_by(email=email):
+    if User.query.filter_by(email=email).first() is not None:
         return abort(409)
 
     def generateID():
         temp = randint(0, 999999999999)
 
-        if User.query.filter_by(id=temp).first() is not None:
+        if User.query.filter_by(id=str(temp)).first() is not None:
             generateID()
         
-        return temp
+        return str(temp)
 
     id = generateID()
 
@@ -38,7 +39,8 @@ def registerUser():
         email = email,
         username = username,
         balance = 0,
-        status = "unverified"
+        status = "unverified",
+        whitelist = [ip]
     )
 
     user.save()
@@ -48,7 +50,7 @@ def registerUser():
         recipients=[email]
     )
 
-    token = s.dumps(email, salt="verify-account")
+    token = serializer.dumps(email, salt="verify-account")
 
     msg.html = render_template("emails/verify.html", username=username, token=token)
 
@@ -65,17 +67,22 @@ def registerUser():
 @auth.route("/login", methods=["POST"])
 def loginUser():
     payload = request.get_json()
-    required = ["id", "password", "add"]
-    ip = request["remote_addr"]
+    required = ["id", "password", "remove-previous-sessions"]
+    ip = request.remote_addr
 
     if not set(required) >= set(payload):
         return abort(400)
 
     id = payload["id"]
     password = payload["password"]
-    add = payload["add"]
+    remove = payload["remove-previous-sessions"]
 
     user = User.query.filter_by(id=id).first()
+
+    if user is None:
+        abort(404)
+
+    print(user)
 
     if not bcrypt.check_password_hash(user.password, password):
         return abort(401)
@@ -85,25 +92,25 @@ def loginUser():
 
     existing = Session.query.filter_by(id=id)
 
-    if add == False:
+    if remove:
         for s in existing:
             s.remove()
 
-    session_token = s.dumps(user.id + str(time()), salt="session-token")[:32]
+    session_token = serializer.dumps(user.id + str(time()), salt="session-token")[:32]
 
     session = Session(id=user.id, token=session_token)
 
     session.save()
 
-    u = User.query.filter_by(id=id).first()
-
-    if ip not in u.whitelist:
+    if ip not in user.whitelist:
         msg = Message(
             "New Access from a New location",
-            recipients=[u.email]
+            recipients=[user.email]
         )
 
-        msg.html = render_template("emails/access.html", username=u.username, id=u.id, ip=ip)
+        msg.html = render_template("emails/access.html", username=user.username, id=user.id, ip=ip)
+
+        mail.send(msg)
 
         return jsonify({
             "ok": True,
@@ -111,6 +118,15 @@ def loginUser():
                 "description": "Check your Inbox to whitelist this IP."
             }
         })
+
+    msg = Message(
+        "New Access from your Account",
+        recipients=[user.email]
+    )
+
+    msg.html = render_template("emails/new.html", username=user.username, id=user.id, ip=ip)
+
+    mail.send(msg)
 
     return jsonify({
         "ok": True,

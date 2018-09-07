@@ -9,7 +9,7 @@ class PaymentRequired(HTTPException):
 default_exceptions[402] = PaymentRequired
 
 @app.errorhandler(400)
-def badRequest():
+def badRequest(e):
     return jsonify({
         "ok": False,
         "result": {
@@ -19,7 +19,7 @@ def badRequest():
     }), 400
 
 @app.errorhandler(401)
-def authenticationError():
+def authenticationError(e):
     return jsonify({
         "ok": False,
         "result": {
@@ -29,7 +29,7 @@ def authenticationError():
     }), 401
 
 @app.errorhandler(402)
-def paymentRequired():
+def paymentRequired(e):
     return jsonify({
         "ok": False,
         "result": {
@@ -39,7 +39,7 @@ def paymentRequired():
     }), 402
 
 @app.errorhandler(403)
-def forbiddenResource():
+def forbiddenResource(e):
     return jsonify({
         "ok": False,
         "result": {
@@ -49,7 +49,7 @@ def forbiddenResource():
     }), 403
 
 @app.errorhandler(404)
-def notFound():
+def notFound(e):
     return jsonify({
         "ok": False,
         "result": {
@@ -59,7 +59,7 @@ def notFound():
     }), 404
 
 @app.errorhandler(405)
-def methodNotAllowed():
+def methodNotAllowed(e):
     return jsonify({
         "ok": False,
         "result": {
@@ -69,7 +69,7 @@ def methodNotAllowed():
     }), 405
 
 @app.errorhandler(409)
-def forbiddenError():
+def conflictError(e):
     return jsonify({
         "ok": False,
         "result": {

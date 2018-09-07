@@ -1,4 +1,4 @@
-from . import s
+from . import serializer
 from .models import User
 from flask import Blueprint, render_template
 from itsdangerous import SignatureExpired
@@ -8,7 +8,7 @@ views = Blueprint("views", __name__)
 @views.route("/verify-email/<token>")
 def verifyAccount(token):
     try:
-        email = s.loads(token, salt="verify-account", max_age=600)
+        email = serializer.loads(token, salt="verify-account", max_age=600)
         user = User.query.filter_by(email=email).first()
         user.status = "normal"
         user.save()
@@ -17,7 +17,7 @@ def verifyAccount(token):
         return render_template("verified.html", verified=False)
 
 
-@views.route("/verify-access/<id>/<ip>", methods=["POST"])
+@views.route("/verify-access/<id>/<ip>", methods=["GET"])
 def verifyAccess(id, ip):
     user = User.query.filter_by(id=id).first()
     if user is None:
@@ -25,3 +25,5 @@ def verifyAccess(id, ip):
     
     user.whitelist.append(str(ip))
     user.save()
+
+    return render_template("ip-address.html")

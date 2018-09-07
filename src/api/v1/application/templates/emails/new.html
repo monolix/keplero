@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+    <body style="font-family: Helvetica; color: black;">
+        <h1>Hi {{ username }}</h1>
+        <h4>We have got a new access to your account.</h4>
+        <h4 style="padding-left: 2em;">IP: {{ ip }}</h4>
+        <h4 style="padding-left: 2em;">(This address is already Granted.)</h4>
+        <h4>To block this session, press this button.</h4>
+        <a style="text-decoration: none; color: #FAFAFA; background: red; padding: 1em 1.2em; border-radius: 0.2em; text-transform: uppercase; display: inline-block;" 
+        href="http://localhost:8000/block-access/{{ id }}/{{ ip }}">Block Access</a>
+        <h5>If the access is not yours, ignore this email</h5>
+    </body>
+</html>
