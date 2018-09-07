@@ -7,6 +7,7 @@ class User(db.Document):
     password = db.BinaryField()
     balance = db.IntField()
     status = db.StringField()
+    whitelist = db.ListField(db.StringField())
 
 class Session(db.Document):
     id = db.StringField()

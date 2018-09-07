@@ -74,6 +74,6 @@ def forbiddenError():
         "ok": False,
         "result": {
             "error-code": 409,
-            "description": "Conflict: Resource already created on the Server (the user already exists)."
+            "description": "Conflict: Resource already created on the Server (the user already exists or session already created)."
         }
     }), 409

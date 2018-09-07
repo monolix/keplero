@@ -5,8 +5,10 @@
 </head>
     <body style="font-family: Helvetica; color: black;">
         <h1>Hi {{ username }}</h1>
-        <h4>Please verify your Account by clicking this button.</h4>
+        <h4>We have got a new access from a new location.</h4>
+        <h4 style="padding-left: 2em;">IP: {{ ip }}</h4>
         <a style="text-decoration: none; color: #FAFAFA; background: #006fca; padding: 1em 1.2em; border-radius: 0.2em; text-transform: uppercase; display: inline-block;" 
-        href="http://localhost:8000/verify-email/{{ token }}">Click Me</a>
+        href="http://localhost:8000/verify-access/{{ id }}/{{ ip }}">Guarantee Access</a>
+        <h5>If the access is not yours, ignore this email</h5>
     </body>
 </html>
