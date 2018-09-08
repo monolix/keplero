@@ -21,6 +21,12 @@ from .errors import *
 # Load Blueprints
 from .views import views
 from .authorization import auth
+from .users import user
+from .actions import action
+from .about import about
 
 app.register_blueprint(views)
 app.register_blueprint(auth, url_prefix="/authorization")
+app.register_blueprint(user, url_prefix="/users")
+app.register_blueprint(action, url_prefix="/actions")
+app.register_blueprint(help, url_prefix="/about")

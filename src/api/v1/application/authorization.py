@@ -134,3 +134,55 @@ def loginUser():
             "access-token": session_token
         }
     })
+
+
+@auth.route("/")
+def helpPageAuth():
+    return jsonify({
+        "ok": True,
+        "result": {
+            "description": "This Namespace is for Authorization Purposes.",
+            "routes": [
+                {
+                    "description": "Register a new account."
+                    "methods": [ "POST" ],
+                    "endpoint": "/register",
+                    "payload": {
+                        "type": "application/json",
+                        "structure": {
+                            "email": "(String) Your email.",
+                            "password": "(String) The password you choose.",
+                            "username": "(String) The username you choose."
+                        }
+                    },
+                    "returns": {
+                        "type": "application/json",
+                        "structure": {
+                            "id": "(String) The Account Access ID.",
+                            "description": "(String) Description."
+                        }
+                    }
+                },
+                {
+                    "description": "Login to Your account."
+                    "methods": [ "POST" ],
+                    "endpoint": "/login",
+                    "payload": {
+                        "type": "application/json",
+                        "structure": {
+                            "id": "(String) The Account Access ID.",
+                            "password": "(String) Used to access to your Account.",
+                            "remove-previous-sessions": "(Boolean) Removes all previous sessions \
+                                stored on the server."
+                        }
+                    },
+                    "returns": {
+                        "type": "application/json",
+                        "structure": {
+                            "access-token": "(String) The Access Token to use to access to your Resources."
+                        }
+                    }
+                }
+            ]
+        }
+    })

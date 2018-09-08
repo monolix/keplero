@@ -1,4 +1,4 @@
 from flask import Blueprint
 
-users = Blueprint("users", __name__)
+user = Blueprint("users", __name__)
 
