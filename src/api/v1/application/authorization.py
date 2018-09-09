@@ -144,8 +144,8 @@ def helpPageAuth():
             "description": "This Namespace is for Authorization Purposes.",
             "routes": [
                 {
-                    "description": "Register a new account."
-                    "methods": [ "POST" ],
+                    "description": "Register a new account.",
+                    "method": "POST",
                     "endpoint": "/register",
                     "payload": {
                         "type": "application/json",
@@ -164,16 +164,15 @@ def helpPageAuth():
                     }
                 },
                 {
-                    "description": "Login to Your account."
-                    "methods": [ "POST" ],
+                    "description": "Login to Your account.",
+                    "method": "POST",
                     "endpoint": "/login",
                     "payload": {
                         "type": "application/json",
                         "structure": {
                             "id": "(String) The Account Access ID.",
                             "password": "(String) Used to access to your Account.",
-                            "remove-previous-sessions": "(Boolean) Removes all previous sessions \
-                                stored on the server."
+                            "remove-previous-sessions": "(Boolean) Removes all previous sessions stored on the server."
                         }
                     },
                     "returns": {
