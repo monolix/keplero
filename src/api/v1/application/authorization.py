@@ -2,7 +2,7 @@ from . import bcrypt, mail, serializer
 from .models import User, Session
 from time import time
 from random import randint
-from flask import Blueprint, request, abort, render_template, jsonify
+from flask import Blueprint, current_app, request, abort, render_template, jsonify
 from flask_mail import Message
 
 auth = Blueprint("authorization", __name__)
@@ -33,13 +33,18 @@ def registerUser():
 
     id = generateID()
 
+    status = "unverified"
+
+    if current_app.config["TESTING"] == True:
+        status = "normal"
+
     user = User(
         id = id,
         password = bcrypt.generate_password_hash(password),
         email = email,
         username = username,
         balance = 0,
-        status = "unverified",
+        status = status,
         whitelist = [ip]
     )
 
@@ -53,8 +58,9 @@ def registerUser():
     token = serializer.dumps(email, salt="verify-account")
 
     msg.html = render_template("emails/verify.html", username=username, token=token)
-
-    mail.send(msg)
+    
+    if not current_app.config["TESTING"] == True:
+        mail.send(msg)
 
     return jsonify({
         "ok": True,
@@ -67,7 +73,7 @@ def registerUser():
 @auth.route("/login", methods=["POST"])
 def loginUser():
     payload = request.get_json()
-    required = ["id", "password", "remove-previous-sessions"]
+    required = ["id", "password"]
     ip = request.remote_addr
 
     if not set(required) >= set(payload):
@@ -75,14 +81,16 @@ def loginUser():
 
     id = payload["id"]
     password = payload["password"]
-    remove = payload["remove-previous-sessions"]
+    
+    try:
+        remove = payload["remove-previous-sessions"]
+    except Exception as e:
+        remove = True
 
     user = User.query.filter_by(id=id).first()
 
     if user is None:
         abort(404)
-
-    print(user)
 
     if not bcrypt.check_password_hash(user.password, password):
         return abort(401)
@@ -172,7 +180,7 @@ def helpPageAuth():
                         "structure": {
                             "id": "(String) The Account Access ID.",
                             "password": "(String) Used to access to your Account.",
-                            "remove-previous-sessions": "(Boolean) Removes all previous sessions stored on the server."
+                            "remove-previous-sessions": "(Boolean) Removes all previous sessions stored on the server [Optional, Default: true]."
                         }
                     },
                     "returns": {
