@@ -5,6 +5,7 @@ from itsdangerous import SignatureExpired
 
 views = Blueprint("views", __name__)
 
+
 @views.route("/verify-email/<token>")
 def verifyAccount(token):
     try:
@@ -22,7 +23,7 @@ def verifyAccess(id, ip):
     user = User.query.filter_by(id=id).first()
     if user is None:
         abort(404)
-    
+
     user.whitelist.append(str(ip))
     user.save()
 

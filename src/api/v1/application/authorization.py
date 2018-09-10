@@ -7,6 +7,7 @@ from flask_mail import Message
 
 auth = Blueprint("authorization", __name__)
 
+
 @auth.route("/register", methods=["POST"])
 def registerUser():
     ip = request.remote_addr
@@ -28,7 +29,7 @@ def registerUser():
 
         if User.query.filter_by(id=str(temp)).first() is not None:
             generateID()
-        
+
         return str(temp)
 
     id = generateID()
@@ -39,13 +40,13 @@ def registerUser():
         status = "normal"
 
     user = User(
-        id = id,
-        password = bcrypt.generate_password_hash(password),
-        email = email,
-        username = username,
-        balance = 0,
-        status = status,
-        whitelist = [ip]
+        id=id,
+        password=bcrypt.generate_password_hash(password),
+        email=email,
+        username=username,
+        balance=0,
+        status=status,
+        whitelist=[ip]
     )
 
     user.save()
@@ -57,8 +58,9 @@ def registerUser():
 
     token = serializer.dumps(email, salt="verify-account")
 
-    msg.html = render_template("emails/verify.html", username=username, token=token)
-    
+    msg.html = render_template(
+        "emails/verify.html", username=username, token=token)
+
     if not current_app.config["TESTING"] == True:
         mail.send(msg)
 
@@ -69,6 +71,7 @@ def registerUser():
             "description": "Check your Inbox to verify this account."
         }
     })
+
 
 @auth.route("/login", methods=["POST"])
 def loginUser():
@@ -81,7 +84,7 @@ def loginUser():
 
     id = payload["id"]
     password = payload["password"]
-    
+
     try:
         remove = payload["remove-previous-sessions"]
     except Exception as e:
@@ -94,7 +97,7 @@ def loginUser():
 
     if not bcrypt.check_password_hash(user.password, password):
         return abort(401)
-    
+
     if user.status == "unverified":
         return abort(401)
 
@@ -104,7 +107,8 @@ def loginUser():
         for s in existing:
             s.remove()
 
-    session_token = serializer.dumps(user.id + str(time()), salt="session-token")[:32]
+    session_token = serializer.dumps(
+        user.id + str(time()), salt="session-token")[:32]
 
     session = Session(id=user.id, token=session_token)
 
@@ -116,7 +120,8 @@ def loginUser():
             recipients=[user.email]
         )
 
-        msg.html = render_template("emails/access.html", username=user.username, id=user.id, ip=ip)
+        msg.html = render_template(
+            "emails/access.html", username=user.username, id=user.id, ip=ip)
 
         mail.send(msg)
 
@@ -132,7 +137,8 @@ def loginUser():
         recipients=[user.email]
     )
 
-    msg.html = render_template("emails/new.html", username=user.username, id=user.id, ip=ip)
+    msg.html = render_template(
+        "emails/new.html", username=user.username, id=user.id, ip=ip)
 
     mail.send(msg)
 
